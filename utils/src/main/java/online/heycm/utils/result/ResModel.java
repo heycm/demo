@@ -1,9 +1,23 @@
 package online.heycm.utils.result;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
- * @Description
+ * 统一返回对象模型
+ *
  * @Author heycm@qq.com
- * @Date 2020-08-01 17:00
+ * @Date 2020-08-01 14:47
  */
-public class ResModel {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ResModel<T> {
+    private boolean ok;
+    private String code;
+    private String msg;
+    private T data;
 }
