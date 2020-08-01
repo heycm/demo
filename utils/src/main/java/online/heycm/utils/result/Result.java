@@ -8,6 +8,14 @@ package online.heycm.utils.result;
  */
 public class Result {
 
+    public static <T>ResModel apiRes(boolean isOk, T data, String msg) {
+        return ResModel.builder()
+                .ok(isOk)
+                .data(isOk ? data : null)
+                .msg(isOk ? null : msg)
+                .build();
+    }
+
     public static ResModel ok() {
         return ResModel.builder()
                 .ok(true)

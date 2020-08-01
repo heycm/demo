@@ -10,7 +10,7 @@
     </parent>
     <groupId>online.heycm</groupId>
     <artifactId>utils</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>utils</name>
     <description>Utils Jar for Spring Boot</description>
 
