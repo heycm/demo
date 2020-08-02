@@ -29,7 +29,7 @@
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
 
-        <!-- 自定义工具包 -->
+        <!-- 自定义工具包：统一返回对象 -->
         <dependency>
             <groupId>online.heycm</groupId>
             <artifactId>utils</artifactId>
