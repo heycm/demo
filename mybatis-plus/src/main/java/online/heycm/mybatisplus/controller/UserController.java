@@ -3,13 +3,11 @@ package online.heycm.mybatisplus.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import online.heycm.mybatisplus.model.User;
+import online.heycm.mybatisplus.service.UserService;
 import online.heycm.utils.result.ResModel;
 import online.heycm.utils.result.Result;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -22,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/test")
     public ResModel test(@RequestBody User user) {
@@ -36,5 +37,10 @@ public class UserController {
         return Result.apiRes(one!=null, one, "查无此人");
     }
 
+    @DeleteMapping("/{id}")
+    public ResModel delById(@PathVariable Integer id) {
+        boolean ok = userService.removeById(id);
+        return Result.apiRes(ok, "删除成功", "删除失败");
+    }
 }
 
