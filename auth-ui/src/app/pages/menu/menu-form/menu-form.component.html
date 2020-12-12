@@ -1,0 +1,54 @@
+<form nz-form [formGroup]="group">
+  <nz-form-item *ngIf="!menu && !pid">
+    <nz-form-label [nzSpan]="4" nzRequired>类型</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置类型!">
+      <nz-radio-group formControlName="f_type" nzButtonStyle="solid">
+        <label nz-radio-button [nzValue]="0">菜单集</label>
+        <label nz-radio-button [nzValue]="1">菜单项</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>标题</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置菜单标题!">
+      <input nz-input formControlName="f_title"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">图标</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+      <input nz-input formControlName="f_icon"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="group.value.type === 1">
+    <nz-form-label [nzSpan]="4" nzRequired>路由</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置菜单路由!">
+      <input nz-input formControlName="f_path"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>状态</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置状态!">
+      <nz-radio-group formControlName="f_enable" nzButtonStyle="solid">
+        <label nz-radio-button [nzValue]="0">启用</label>
+        <label nz-radio-button [nzValue]="1">禁用</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>排序</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置菜单顺序!">
+      <nz-input-number formControlName="f_indez" [nzMin]="1" [nzStep]="1"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">备注</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+      <textarea
+        nz-input
+        formControlName="f_remark"
+        [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

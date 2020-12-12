@@ -1,0 +1,77 @@
+<div nz-row [nzGutter]="10">
+  <div nz-col [nzSpan]="6">
+    <nz-list>
+      <nz-list-header>应用列表</nz-list-header>
+      <nz-list-item *ngFor="let item of applist" [tabindex]="item.id" (click)="clickApp(item)">
+        {{ item.name }}
+      </nz-list-item>
+    </nz-list>
+  </div>
+  <div nz-col [nzSpan]="18">
+    <nz-space nzDirection="vertical" style="width: 100%;">
+      <nz-space-item>
+        <div nz-row nzJustify="space-between">
+          <div nz-col class="app-name">
+            {{app ? app.name : ''}}
+          </div>
+          <div nz-col>
+            <button nz-button [nzType]="'primary'" [disabled]="!app" (click)="add()">添加菜单</button>
+          </div>
+        </div>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-table #expandTable [nzData]="data" nzTableLayout="fixed" [nzFrontPagination]="false">
+          <thead>
+            <tr>
+              <th nzWidth="180px">标题</th>
+              <th>类型</th>
+              <th>图标</th>
+              <th>路由</th>
+              <th nzWidth="70px">状态</th>
+              <th nzWidth="70px">排序</th>
+              <th nzWidth="160px">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of expandTable.data">
+              <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+                <tr *ngIf="(item.parent && item.parent.expanded) || !item.parent">
+                  <td
+                    [nzIndentSize]="item.level! * 20"
+                    [nzShowExpand]="!!item.children && item.children.length > 0"
+                    [(nzExpand)]="item.expanded"
+                    (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                  >
+                    {{ item.title }}
+                  </td>
+                  <td>
+                    <nz-tag *ngIf="item.origin.type === 0" [nzColor]="'purple'">菜单集</nz-tag>
+                    <nz-tag *ngIf="item.origin.type === 1" [nzColor]="'blue'">菜单项</nz-tag>
+                  </td>
+                  <td>{{ item.origin.icon }}</td>
+                  <td>{{ item.origin.path }}</td>
+                  <td>
+                    <nz-tag *ngIf="item.origin.enable === 0" [nzColor]="'green'">启用</nz-tag>
+                    <nz-tag *ngIf="item.origin.enable === 1" [nzColor]="'red'">禁用</nz-tag>
+                  </td>
+                  <td>{{ item.origin.indez }}</td>
+                  <td>
+                    <div style="float: right;">
+                    <a (click)="addChild(item.origin.id)" *ngIf="item.origin.type === 0">子项</a>
+                    <nz-divider nzType="vertical" *ngIf="item.origin.type === 0"></nz-divider>
+                    <a (click)="edit(item.origin)">编辑</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a nz-popconfirm nzPopconfirmTitle="确定删除?" (nzOnConfirm)="deleteRow(item.origin.id)"
+                      style="color: #FF4D4F;">删除</a>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </tbody>
+        </nz-table>
+      </nz-space-item>
+    </nz-space>
+  </div>
+</div>
+

@@ -1,0 +1,22 @@
+nz-list-header {
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 0;
+    padding-bottom: 9px;
+}
+nz-list-item{
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+nz-list-item:focus {
+    background-color: #108EE9;
+    color: #FFFFFF;
+}
+
+.app-name {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}

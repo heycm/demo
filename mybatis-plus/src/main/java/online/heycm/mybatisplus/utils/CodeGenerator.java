@@ -42,9 +42,9 @@ public class CodeGenerator {
         gc.setDateType(DateType.ONLY_DATE);
         gc.setSwagger2(rb.getString("isUseSwagger2").equals("true")); // 实体属性 Swagger2 注解
 
-        gc.setEntityName("%s");
+        gc.setEntityName("%sEntity");
         gc.setControllerName("%sController");
-        gc.setServiceName("%sService");
+        gc.setServiceName("I%sService");
         gc.setServiceImplName(gc.getServiceName() + "Impl");
         gc.setMapperName("%sMapper");
         // gc.setXmlName("%sMapper");
@@ -92,12 +92,12 @@ public class CodeGenerator {
             }
         }
         if (update.length != 0) {
-            for (String field : insert) {
+            for (String field : update) {
                 tableFillList.add(new TableFill(field, FieldFill.UPDATE));
             }
         }
         if (insertUpdate.length != 0) {
-            for (String field : insert) {
+            for (String field : insertUpdate) {
                 tableFillList.add(new TableFill(field, FieldFill.INSERT_UPDATE));
             }
         }
@@ -110,27 +110,27 @@ public class CodeGenerator {
         pc.setController("controller");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
-        pc.setEntity("model");
+        pc.setEntity("entity");
         pc.setMapper("mapper");
         ag.setPackageInfo(pc);
 
-        //注入自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-            }
-        };
-        ArrayList<FileOutConfig> focList = new ArrayList<>();
-        // 调整 xml 生成目录
-        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return rb.getString("xmlOutPutDir") + "/" + tableInfo.getEntityName() + "Mapper.xml";
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        ag.setCfg(cfg);
+        // //注入自定义配置
+        // InjectionConfig cfg = new InjectionConfig() {
+        //     @Override
+        //     public void initMap() {
+        //         // to do nothing
+        //     }
+        // };
+        // ArrayList<FileOutConfig> focList = new ArrayList<>();
+        // // 调整 xml 生成目录
+        // focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+        //     @Override
+        //     public String outputFile(TableInfo tableInfo) {
+        //         return rb.getString("xmlOutPutDir") + "/" + tableInfo.getEntityName() + "Mapper.xml";
+        //     }
+        // });
+        // cfg.setFileOutConfigList(focList);
+        // ag.setCfg(cfg);
 
         // 模板设置，null就不生成
         TemplateConfig tc = new TemplateConfig();
@@ -139,7 +139,8 @@ public class CodeGenerator {
         tc.setServiceImpl("/templates/serviceImpl.java.vm");
         tc.setEntity("/templates/entity.java.vm");
         tc.setMapper("/templates/mapper.java.vm");
-        tc.setXml(null);
+        // tc.setXml(null);
+        tc.setXml("/templates/mapper.xml.vm");
 
         ag.setTemplate(tc);
         ag.execute();

@@ -1,53 +1,103 @@
 package online.heycm.utils.result;
 
+import java.util.List;
+
 /**
- * 统一返回对象构造工具
+ * 接口返回对象构建工具
  *
  * @Author heycm@qq.com
- * @Date 2020-08-01 14:26
+ * @Date 2020-11-14 12:26
  */
 public class Result {
 
-    public static <T>ResModel apiRes(boolean isOk, T data, String msg) {
-        return ResModel.builder()
-                .ok(isOk)
-                .data(isOk ? data : null)
-                .msg(isOk ? null : msg)
-                .build();
+    /**
+     * 基本返回(成功状态)
+     * @param msg 接口消息
+     */
+    public static ApiResult ok(String msg) {
+        return new ApiResult(true, msg);
     }
 
-    public static ResModel ok() {
-        return ResModel.builder()
-                .ok(true)
-                .build();
+    /**
+     * 基本返回(失败状态)
+     * @param msg 接口消息
+     */
+    public static ApiResult error(String msg) {
+        return new ApiResult(false, msg);
     }
 
-    public static <T>ResModel ok(T data) {
-        if (data instanceof ResEnum) {
-            return ResModel.builder()
-                    .ok(true)
-                    .code(((ResEnum) data).getCode())
-                    .data(((ResEnum) data).getMsg())
-                    .build();
-        }
-        return ResModel.builder()
-                .ok(true)
-                .data(data)
-                .build();
+    /**
+     * 基本返回
+     * @param ok 是否成功：true 是 false 否
+     * @param msg 接口消息
+     */
+    public static ApiResult api(boolean ok, String msg) {
+        return new ApiResult(ok, msg);
     }
 
-    public static ResModel error(String msg) {
-        return ResModel.builder()
-                .ok(false)
-                .msg(msg)
-                .build();
+    /**
+     * 基本返回
+     * @param ok 是否成功：true 是 false 否
+     * @param okMsg 成功消息
+     * @param errMsg 失败消息
+     */
+    public static ApiResult api(boolean ok, String okMsg, String errMsg) {
+        return new ApiResult(ok, ok ? okMsg : errMsg);
     }
 
-    public static ResModel error(ResEnum resEnum) {
-        return ResModel.builder()
-                .ok(false)
-                .code(resEnum.getCode())
-                .msg(resEnum.getMsg())
-                .build();
+    /**
+     * 数据返回
+     * @param data 返回数据
+     * @param <T> 返回数据泛型
+     */
+    public static <T> DataResult<T> data(T data) {
+        DataResult<T> result = new DataResult<>(data);
+        result.setOk(true);
+        return result;
+    }
+
+    /**
+     * 数据返回
+     * @param msg 接口消息
+     * @param data 返回数据
+     * @param <T> 返回数据泛型
+     */
+    public static <T> DataResult<T> data(String msg, T data) {
+        DataResult<T> result = new DataResult<>(data);
+        result.setOk(true);
+        result.setMsg(msg);
+        return result;
+    }
+
+    /**
+     * 分页数据返回
+     * @param pages 总页数
+     * @param page 当前页
+     * @param size 每页数据量
+     * @param total 总数据量
+     * @param data 返回数据
+     * @param <T> 返回数据泛型
+     */
+    public static <T> PageResult<T> page(long pages, long page, long size, long total, List<T> data) {
+        PageResult<T> result = new PageResult<>(pages, page, size, total, data);
+        result.setOk(true);
+        return result;
+    }
+
+    /**
+     * 分页数据返回
+     * @param msg 接口消息
+     * @param pages 总页数
+     * @param page 当前页
+     * @param size 每页数据量
+     * @param total 总数据量
+     * @param data 返回数据
+     * @param <T> 返回数据泛型
+     */
+    public static <T> PageResult<T> page(String msg, long pages, long page, long size, long total, List<T> data) {
+        PageResult<T> result = new PageResult<>(pages, page, size, total, data);
+        result.setOk(true);
+        result.setMsg(msg);
+        return result;
     }
 }

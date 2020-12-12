@@ -1,0 +1,14 @@
+<form nz-form [formGroup]="group">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>账户</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置账户!">
+      <input nz-input formControlName="username"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>昵称</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置昵称!">
+      <input nz-input formControlName="nickname"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>

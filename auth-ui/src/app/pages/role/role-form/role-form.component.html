@@ -1,0 +1,33 @@
+<form nz-form [formGroup]="group">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>英文</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置英文名称!">
+      <input nz-input formControlName="name"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>中文</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置中文名称!">
+      <input nz-input formControlName="nameZh"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4" nzRequired>状态</nz-form-label>
+    <nz-form-control [nzSpan]="20" nzErrorTip="请设置状态!">
+      <nz-radio-group formControlName="enable" nzButtonStyle="solid">
+        <label nz-radio-button [nzValue]="0">启用</label>
+        <label nz-radio-button [nzValue]="1">禁用</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">备注</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+      <textarea
+        nz-input
+        formControlName="remark"
+        [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

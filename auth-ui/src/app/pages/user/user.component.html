@@ -1,0 +1,60 @@
+<nz-space nzDirection="vertical" style="width: 100%;">
+  <nz-space-item>
+    <div nz-row nzJustify="space-between">
+      <div nz-col>
+        <button nz-button [nzType]="'primary'" (click)="add()">添加用户</button>
+      </div>
+      <div nz-col>
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="用户名/昵称" [(ngModel)]="query.param"
+            (ngModelChange)="search()" (keyup.enter)="search()" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-space-item>
+  <nz-space-item>
+
+    <nz-table [nzData]="data" [nzFrontPagination]="false"
+      [nzTotal]="total" [nzPageIndex]="page" [nzPageSize]="size" (nzPageIndexChange)="pageChange($event)">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <th>昵称</th>
+          <th>状态</th>
+          <th>创建时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td>{{ item.username }}</td>
+          <td>{{ item.nickname }}</td>
+          <td>
+            <nz-tag *ngIf="item.enable === 0" [nzColor]="'green'">启用</nz-tag>
+            <nz-tag *ngIf="item.enable === 1" [nzColor]="'red'">禁用</nz-tag>
+          </td>
+          <td>{{ item.createAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>
+            <a (click)="addRole(item.id)">授权</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="edit(item)">编辑</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a nz-popconfirm nzPopconfirmTitle="确定删除?" (nzOnConfirm)="deleteRow(item.id)"
+              style="color: #FF4D4F;">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-space-item>
+</nz-space>
+<nz-drawer [nzClosable]="false" [nzVisible]="drawer"
+  nzPlacement="right" nzTitle="角色授权" (nzOnClose)="drawer = false">
+  <nz-radio-group [(ngModel)]="roleId" (ngModelChange)="roleIdChange()">
+    <label nz-radio [nzValue]="" style="display: block;margin-bottom: 5px;" >无</label>
+    <label nz-radio [nzValue]="item.id" style="display: block;margin-bottom: 5px;"
+      *ngFor="let item of roles">{{item.nameZh}}</label>
+  </nz-radio-group>
+</nz-drawer>

@@ -1,0 +1,53 @@
+<nz-space nzDirection="vertical" style="width: 100%;">
+  <nz-space-item>
+    <div nz-row nzJustify="space-between">
+      <div nz-col>
+        <button nz-button [nzType]="'primary'" (click)="add()">添加应用</button>
+      </div>
+      <div nz-col>
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="名称/编码" [(ngModel)]="keyword"
+            (ngModelChange)="search()" (keyup.enter)="search()" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-space-item>
+  <nz-space-item>
+
+    <nz-table [nzData]="data" [nzFrontPagination]="false">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>编码</th>
+          <th>地址</th>
+          <th>状态</th>
+          <th>排序</th>
+          <th>创建时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td>{{ item.name }}</td>
+          <td>{{ item.code }}</td>
+          <td>{{ item.url }}</td>
+          <td>
+            <nz-tag *ngIf="item.enable === 0" [nzColor]="'green'">启用</nz-tag>
+            <nz-tag *ngIf="item.enable === 1" [nzColor]="'red'">禁用</nz-tag>
+          </td>
+          <td>{{ item.indez }}</td>
+          <td>{{ item.createAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>
+            <a (click)="edit(item)">编辑</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a nz-popconfirm nzPopconfirmTitle="确定删除?" (nzOnConfirm)="deleteRow(item.id)"
+              style="color: #FF4D4F;">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-space-item>
+</nz-space>

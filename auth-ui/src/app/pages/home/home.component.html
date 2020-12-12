@@ -1,0 +1,56 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a routerLink="/home">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>系统管理中心</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <div *ngFor="let item of menuTree">
+        <li nz-menu-item nzMatchRouter *ngIf="item.origin.type === 1">
+          <i nz-icon *ngIf="item.origin.icon" [nzType]="item.origin.icon"></i>
+          <a [routerLink]="item.origin.path || '*'">{{item.title}}</a>
+        </li>
+        <li nz-submenu *ngIf="item.origin.type === 0" [nzTitle]="item.title" [nzIcon]="item.origin.icon">
+          <ul>
+            <li nz-menu-item nzMatchRouter *ngFor="let child of item.children">
+              <i nz-icon *ngIf="child.origin.icon" [nzType]="child.origin.icon"></i>
+              <a [routerLink]="child.origin.path || '*'">{{child.title}}</a>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i class="trigger"
+               nz-icon
+               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+        </span>
+        <a nz-dropdown [nzDropdownMenu]="menu" class="header-dropdown">{{nickname}}</a>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li nz-menu-item (click)="myInfo()">个人信息</li>
+    <li nz-menu-item (click)="changePwd()">修改密码</li>
+    <li nz-menu-item nzDanger (click)="logout()">退出登录</li>
+  </ul>
+</nz-dropdown-menu>

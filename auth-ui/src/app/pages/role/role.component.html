@@ -1,0 +1,61 @@
+<nz-space nzDirection="vertical" style="width: 100%;">
+  <nz-space-item>
+    <div nz-row nzJustify="space-between">
+      <div nz-col>
+        <button nz-button [nzType]="'primary'" (click)="add()">添加角色</button>
+      </div>
+      <div nz-col>
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="英文名/中文名" [(ngModel)]="keyword"
+            (ngModelChange)="search()" (keyup.enter)="search()" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+  </nz-space-item>
+  <nz-space-item>
+
+    <nz-table [nzData]="data" [nzFrontPagination]="false">
+      <thead>
+        <tr>
+          <th>英文名</th>
+          <th>中文名</th>
+          <th>状态</th>
+          <th>创建时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td>{{ item.name }}</td>
+          <td>{{ item.nameZh }}</td>
+          <td>
+            <nz-tag *ngIf="item.enable === 0" [nzColor]="'green'">启用</nz-tag>
+            <nz-tag *ngIf="item.enable === 1" [nzColor]="'red'">禁用</nz-tag>
+          </td>
+          <td>{{ item.createAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>
+            <a (click)="addMenus(item.id)">授权</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="edit(item)">编辑</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a nz-popconfirm nzPopconfirmTitle="确定删除?" (nzOnConfirm)="deleteRow(item.id)"
+              style="color: #FF4D4F;">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-space-item>
+</nz-space>
+<nz-drawer [nzClosable]="false" [nzVisible]="drawer"
+  nzPlacement="right" nzTitle="菜单授权" (nzOnClose)="drawer = false">
+    <nz-select [(ngModel)]="systemId" (ngModelChange)="systemIdChange()"
+      style="width: 100%;margin-bottom: 20px;"nzShowSearch nzPlaceHolder="请选择授权系统">
+      <nz-option *ngFor="let item of systems" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+    </nz-select>
+    <p *ngIf="menuTree.length === 0" style="text-align: center;color: rgba(0,0,0,.25)"> -- 暂无数据 -- </p>
+    <nz-tree #nzTreeComponent [nzData]="menuTree" nzCheckable
+    (nzCheckBoxChange)="nzTreeCheck($event)" [nzCheckedKeys]="checked"></nz-tree>
+</nz-drawer>

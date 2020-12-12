@@ -10,7 +10,7 @@
     </parent>
     <groupId>online.heycm</groupId>
     <artifactId>utils</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
     <name>utils</name>
     <description>Utils Jar for Spring Boot</description>
 
@@ -25,6 +25,17 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
         </dependency>
     </dependencies>
 
